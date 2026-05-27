@@ -11,6 +11,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
+  <!-- HubSpot Form -->
+  <script src="https://js-na2.hsforms.net/forms/embed/246297099.js" defer></script>
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -394,41 +397,6 @@
     }
     .form-box h3 { font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
     .form-box p { font-size: 0.9rem; color: var(--muted); margin-bottom: 28px; }
-    .fallback-form .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-    .fallback-form input,
-    .fallback-form select {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-family: inherit;
-      color: var(--dark);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .fallback-form input:focus,
-    .fallback-form select:focus { border-color: var(--brand); }
-    .fallback-form .full { grid-column: 1 / -1; }
-    .fallback-form .submit-btn {
-      width: 100%;
-      padding: 14px;
-      background: var(--brand);
-      color: var(--white);
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 8px;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .fallback-form .submit-btn:hover { background: var(--brand-dark); transform: translateY(-1px); }
     .form-fine { font-size: 0.78rem; color: var(--muted); text-align: center; margin-top: 12px; }
 
     /* ── FOOTER ── */
@@ -455,7 +423,6 @@
       .about-badge { right: 0; }
     }
     @media (max-width: 600px) {
-      .fallback-form .form-row { grid-template-columns: 1fr; }
       .hero-actions { flex-direction: column; align-items: center; }
       .stats-inner { grid-template-columns: 1fr; }
       .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 16px; }
@@ -709,27 +676,7 @@
     <div class="form-box">
       <h3>Let's talk AI.</h3>
       <p>Free, no-pressure conversation. Just good info and a clear next step.</p>
-      <!-- REPLACE WITH HUBSPOT EMBED CODE WHEN READY -->
-      <form class="fallback-form" name="contact" method="POST" action="https://formspree.io/f/YOUR_FORM_ID">
-        <div class="form-row">
-          <input type="text" name="first_name" placeholder="First name" required />
-          <input type="text" name="last_name" placeholder="Last name" required />
-        </div>
-        <div class="form-row">
-          <input type="email" name="email" placeholder="Email address" required class="full" style="grid-column:1/-1" />
-        </div>
-        <div class="form-row">
-          <select name="interest" class="full" style="grid-column:1/-1">
-            <option value="" disabled selected>What best describes you?</option>
-            <option value="individual">Individual / Professional</option>
-            <option value="small_business">Small Business Owner</option>
-            <option value="nonprofit">Nonprofit / Ministry</option>
-            <option value="executive">Executive / Corporate Team</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <button type="submit" class="submit-btn">Get My Free Discovery Call</button>
-      </form>
+      <div class="hs-form-frame" data-region="na2" data-form-id="ff7e659c-7475-45bf-a735-c02e65c541a7" data-portal-id="246297099"></div>
       <p class="form-fine">No spam. No commitment. Just a conversation.</p>
     </div>
   </section>
