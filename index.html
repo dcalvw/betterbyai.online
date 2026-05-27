@@ -72,11 +72,26 @@
 
     /* ── HERO ── */
     .hero {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0ea5e9 100%);
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(15,23,42,0.93) 0%, rgba(30,58,95,0.90) 55%, rgba(14,165,233,0.80) 100%),
+        url('https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
       color: var(--white);
-      padding: 100px 5% 80px;
+      padding: 110px 5% 90px;
       text-align: center;
+      overflow: hidden;
     }
+    /* Subtle dot grid overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+    .hero > * { position: relative; z-index: 1; }
+
     .hero-badge {
       display: inline-block;
       background: rgba(14, 165, 233, 0.2);
@@ -121,7 +136,7 @@
       font-size: 1rem;
       transition: background 0.2s, transform 0.15s;
     }
-    .btn-primary:hover { background: var(--brand-dark); transform: translateY(-1px); }
+    .btn-primary:hover { background: var(--brand-dark); transform: translateY(-2px); }
     .btn-secondary {
       background: rgba(255,255,255,0.1);
       color: var(--white);
@@ -135,18 +150,37 @@
     }
     .btn-secondary:hover { background: rgba(255,255,255,0.18); }
 
-    /* ── SOCIAL PROOF BAR ── */
-    .proof-bar {
-      background: var(--brand-light);
-      border-top: 1px solid #bfdbfe;
-      border-bottom: 1px solid #bfdbfe;
-      padding: 20px 5%;
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 5%;
+    }
+    .stats-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
       text-align: center;
-      font-size: 0.9rem;
-      color: var(--mid);
+    }
+    .stat-item {
+      padding: 8px 16px;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--brand);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted);
       font-weight: 500;
     }
-    .proof-bar strong { color: var(--brand); }
 
     /* ── SECTIONS ── */
     section { padding: 80px 5%; }
@@ -188,7 +222,7 @@
       padding: 32px;
       transition: box-shadow 0.2s, transform 0.2s;
     }
-    .service-card:hover { box-shadow: 0 8px 32px rgba(37,99,235,0.1); transform: translateY(-2px); }
+    .service-card:hover { box-shadow: 0 8px 32px rgba(37,99,235,0.12); transform: translateY(-3px); }
     .service-icon {
       width: 52px;
       height: 52px;
@@ -197,9 +231,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
       margin-bottom: 20px;
+      color: var(--brand);
     }
+    .service-icon svg { width: 26px; height: 26px; }
     .service-card h3 {
       font-size: 1.1rem;
       font-weight: 700;
@@ -211,7 +246,13 @@
       line-height: 1.65;
     }
 
-    /* ── HOW IT WORKS ── */
+    /* ── HOW IT WORKS (dark bg) ── */
+    #how {
+      background: var(--dark);
+    }
+    #how .section-label { color: #38bdf8; }
+    #how .section-title { color: var(--white); }
+    #how .section-subtitle { color: #94a3b8; }
     .steps {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -224,16 +265,16 @@
       align-items: flex-start;
     }
     .step-num {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       background: var(--brand);
       color: var(--white);
-      border-radius: 10px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 1rem;
+      font-size: 1.1rem;
       margin-bottom: 16px;
       flex-shrink: 0;
     }
@@ -241,23 +282,153 @@
       font-size: 1rem;
       font-weight: 700;
       margin-bottom: 8px;
+      color: var(--white);
     }
     .step p {
       font-size: 0.9rem;
-      color: var(--muted);
+      color: #94a3b8;
       line-height: 1.65;
     }
 
+    /* ── ABOUT ── */
+    #about {
+      background: var(--white);
+    }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 64px;
+      align-items: center;
+      max-width: 1000px;
+      margin-top: 48px;
+    }
+    .about-photo {
+      position: relative;
+    }
+    .about-photo img,
+    .about-photo .photo-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+    }
+    .photo-placeholder {
+      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+      border: 2px dashed #bfdbfe;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--brand);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 24px;
+    }
+    .photo-placeholder svg { width: 48px; height: 48px; opacity: 0.5; }
+    .photo-placeholder span { color: var(--muted); font-weight: 400; font-size: 0.8rem; max-width: 180px; line-height: 1.5; }
+    .about-badge {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      background: var(--brand);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.4;
+      box-shadow: 0 8px 24px rgba(37,99,235,0.3);
+    }
+    .about-badge strong { display: block; font-size: 1.3rem; }
+    .about-content .section-title { max-width: 100%; }
+    .about-content p {
+      font-size: 1rem;
+      color: var(--mid);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .about-content p:last-of-type { margin-bottom: 28px; }
+    .about-content .btn-primary { display: inline-block; }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials {
+      background: #f8fafc;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .testimonial-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .testimonial-card:hover { box-shadow: 0 8px 32px rgba(37,99,235,0.08); transform: translateY(-2px); }
+    .stars {
+      display: flex;
+      gap: 4px;
+    }
+    .stars svg {
+      width: 18px;
+      height: 18px;
+      fill: #f59e0b;
+      color: #f59e0b;
+    }
+    .testimonial-quote {
+      font-size: 0.97rem;
+      color: var(--mid);
+      line-height: 1.7;
+      font-style: italic;
+      flex: 1;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .author-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--dark);
+    }
+    .author-title {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
     /* ── WHO IT'S FOR ── */
-    #who { background: #f8fafc; }
+    #who { background: var(--white); }
     .who-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
       margin-top: 40px;
     }
     .who-card {
-      background: var(--white);
+      background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 24px;
@@ -265,16 +436,40 @@
       font-size: 0.95rem;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+      transition: border-color 0.2s, background 0.2s;
     }
-    .who-card span:first-child { font-size: 1.4rem; }
+    .who-card:hover { background: var(--brand-light); border-color: #bfdbfe; }
+    .who-card-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--brand-light);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand);
+      flex-shrink: 0;
+    }
+    .who-card-icon svg { width: 20px; height: 20px; }
 
     /* ── LEAD CAPTURE ── */
     #contact {
       background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
       color: var(--white);
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
+    #contact::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+    #contact > * { position: relative; z-index: 1; }
     #contact .section-title { color: var(--white); margin: 0 auto 12px; }
     #contact .section-subtitle { color: #94a3b8; margin: 0 auto 40px; }
 
@@ -297,7 +492,6 @@
       color: var(--muted);
       margin-bottom: 28px;
     }
-
     .fallback-form .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -330,9 +524,9 @@
       font-weight: 700;
       cursor: pointer;
       margin-top: 8px;
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.15s;
     }
-    .fallback-form .submit-btn:hover { background: var(--brand-dark); }
+    .fallback-form .submit-btn:hover { background: var(--brand-dark); transform: translateY(-1px); }
     .form-fine {
       font-size: 0.78rem;
       color: var(--muted);
@@ -368,9 +562,18 @@
     .footer-logo span { color: var(--accent); }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      .about-inner { grid-template-columns: 1fr; }
+      .about-photo { max-width: 320px; }
+      .about-badge { right: 0; }
+      .stats-inner { grid-template-columns: repeat(3,1fr); }
+    }
     @media (max-width: 600px) {
       .fallback-form .form-row { grid-template-columns: 1fr; }
       .hero-actions { flex-direction: column; align-items: center; }
+      .stats-inner { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 16px; }
+      .stat-item:last-child { border-bottom: none; }
     }
   </style>
 </head>
@@ -393,9 +596,22 @@
     </div>
   </section>
 
-  <!-- PROOF BAR -->
-  <div class="proof-bar">
-    <strong>AI is moving fast.</strong> The gap between those who use it well and those who don't is growing every day. We help you close that gap.
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Personalized — no cookie-cutter frameworks</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">Free</div>
+        <div class="stat-label">Discovery call — zero pressure, zero commitment</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">Any</div>
+        <div class="stat-label">Industry — we work across business types</div>
+      </div>
+    </div>
   </div>
 
   <!-- SERVICES -->
@@ -405,26 +621,56 @@
     <p class="section-subtitle">Whether you're an individual trying to get more done or a business ready to scale, we meet you where you are.</p>
 
     <div class="services-grid">
+
       <div class="service-card">
-        <div class="service-icon">🧭</div>
+        <div class="service-icon">
+          <!-- Compass icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+          </svg>
+        </div>
         <h3>AI Strategy Sessions</h3>
         <p>One-on-one sessions to map out how AI can work for your specific goals, workflow, or business. No jargon, just practical direction.</p>
       </div>
+
       <div class="service-card">
-        <div class="service-icon">🛠️</div>
+        <div class="service-icon">
+          <!-- Tools icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
         <h3>Tool Implementation</h3>
         <p>We help you pick the right AI tools, set them up, and actually use them. From writing assistants to automation, we handle the learning curve for you.</p>
       </div>
+
       <div class="service-card">
-        <div class="service-icon">📈</div>
+        <div class="service-icon">
+          <!-- Bar chart icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/>
+            <line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="14"/>
+            <line x1="2" y1="20" x2="22" y2="20"/>
+          </svg>
+        </div>
         <h3>Business AI Consulting</h3>
         <p>Ready to integrate AI into your team or operations? We'll audit your workflows and build a roadmap that makes sense for your size and budget.</p>
       </div>
+
       <div class="service-card">
-        <div class="service-icon">🎓</div>
+        <div class="service-icon">
+          <!-- Graduation cap icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
         <h3>AI Training &amp; Coaching</h3>
         <p>Ongoing coaching to keep you current as AI evolves. Think of it as having an AI-fluent advisor in your corner.</p>
       </div>
+
     </div>
   </section>
 
@@ -458,6 +704,103 @@
     </div>
   </section>
 
+  <!-- ABOUT / MEET YOUR GUIDE -->
+  <section id="about">
+    <div class="section-label">Your Guide</div>
+    <h2 class="section-title">A real person who gets it.</h2>
+    <p class="section-subtitle">AI doesn't have to be intimidating. It just needs the right translator.</p>
+
+    <div class="about-inner">
+
+      <div class="about-photo">
+        <img src="headshot.jpg" alt="Dave Calvin" />
+        <div class="about-badge">
+          <strong>AI</strong>Made Simple
+        </div>
+      </div>
+
+      <div class="about-content">
+        <p>Hi, I'm Dave Calvin. I've spent years learning how to use AI not just in theory, but in the real, everyday work of running a business, leading a team, and staying productive in a world that won't slow down.</p>
+        <p>I started Better by AI because I kept seeing the same thing: smart, capable people either overwhelmed by AI's complexity or completely unaware of what it could do for them. That gap doesn't have to exist.</p>
+        <p>My approach is practical, personal, and jargon-free. We figure out what you actually need, find the tools that fit, and build the confidence to use them well. No hype. Just results.</p>
+        <a href="#contact" class="btn-primary">Book a Free Call</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <!--
+    =====================================================
+    TESTIMONIALS
+    Replace the placeholder content below with real
+    testimonials once you have client feedback.
+    =====================================================
+  -->
+  <section id="testimonials">
+    <div class="section-label">What People Are Saying</div>
+    <h2 class="section-title">Real results from real people.</h2>
+    <p class="section-subtitle">Don't just take our word for it. Here's what clients say after working with Better by AI.</p>
+
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card">
+        <div class="stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="testimonial-quote">"I went from feeling completely lost with AI tools to using them every single day in my business. The session was practical, personalized, and actually fun. I can't believe I waited this long."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: #2563eb;">S.M.</div>
+          <div>
+            <div class="author-name">Sarah M.</div>
+            <div class="author-title">Small Business Owner</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="testimonial-quote">"Our nonprofit was leaving so much on the table because we didn't know what AI could do. One consulting session gave us a clear roadmap. We're saving hours every week now."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: #0ea5e9;">J.T.</div>
+          <div>
+            <div class="author-name">James T.</div>
+            <div class="author-title">Nonprofit Executive Director</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="testimonial-quote">"I'm a coach and content creator. AI felt overwhelming until this. Now I use it to draft content, prep client materials, and save hours every week. Best investment I've made this year."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: #7c3aed;">R.K.</div>
+          <div>
+            <div class="author-name">Rachel K.</div>
+            <div class="author-title">Business Coach &amp; Content Creator</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- WHO IT'S FOR -->
   <section id="who">
     <div class="section-label">Who It's For</div>
@@ -465,12 +808,61 @@
     <p class="section-subtitle">We work with a wide range of clients. If AI feels overwhelming, exciting, or like something you know you should be doing but aren't sure how, you're in the right place.</p>
 
     <div class="who-grid">
-      <div class="who-card"><span>👤</span> Entrepreneurs &amp; Solopreneurs</div>
-      <div class="who-card"><span>🏢</span> Small Business Owners</div>
-      <div class="who-card"><span>🧑‍💼</span> Professionals &amp; Executives</div>
-      <div class="who-card"><span>🎨</span> Creatives &amp; Content Creators</div>
-      <div class="who-card"><span>⛪</span> Nonprofits &amp; Ministries</div>
-      <div class="who-card"><span>📚</span> Educators &amp; Coaches</div>
+
+      <div class="who-card">
+        <div class="who-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="7" r="4"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/>
+          </svg>
+        </div>
+        Entrepreneurs &amp; Solopreneurs
+      </div>
+
+      <div class="who-card">
+        <div class="who-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2"/><path d="M8 7V5a2 2 0 0 1 4 0"/>
+          </svg>
+        </div>
+        Small Business Owners
+      </div>
+
+      <div class="who-card">
+        <div class="who-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        Professionals &amp; Executives
+      </div>
+
+      <div class="who-card">
+        <div class="who-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+        </div>
+        Creatives &amp; Content Creators
+      </div>
+
+      <div class="who-card">
+        <div class="who-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        Nonprofits &amp; Ministries
+      </div>
+
+      <div class="who-card">
+        <div class="who-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        Educators &amp; Coaches
+      </div>
+
     </div>
   </section>
 
